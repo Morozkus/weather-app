@@ -6,8 +6,6 @@ export default class MainPage {
     static body = document.body
 
     async run() {
-        const res = await fetch('../../russian-cities.json')
-        const cities = await res.json()
         // стандартный контейнер для централизации и ограничения пространства
         const container = document.createElement('div')
         container.classList.add('container', 'card__container')
@@ -16,9 +14,8 @@ export default class MainPage {
         // run() добавляет панель в начало document.body
         weatherPanel.run()
 
-        const search = new Search()
         const cardBoard = new CardBoard()
-        cardBoard.render(cities)
+        const search = new Search(cardBoard)
 
         container.append(search.searchPanel, cardBoard.cardBoard)
 

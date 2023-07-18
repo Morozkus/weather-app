@@ -1,8 +1,14 @@
+import axios from "../../node_modules/axios/index.js"
+import { City } from "../Interfaces/Interfaces.js"
+import CardBoard from "./CardBoard.js"
+
 export default class Search {
     searchPanel: HTMLElement
+    board: CardBoard
 
-    constructor() {
+    constructor(board: CardBoard) {
         this.searchPanel = this.createSearchPanel()
+        this.board = board
     }
 
     createSearchPanel(): HTMLElement {
@@ -20,16 +26,34 @@ export default class Search {
         const searchBtn = document.createElement('button')
         searchBtn.classList.add('btn', 'search__btn')
         searchBtn.textContent = 'Найти'
-        searchBtn.addEventListener('click', () => {
-            if (!search.value) return;
-            console.log(1);
 
+        searchBtn.addEventListener('click', async () => {
+
+            if (!search.value) return
+
+            this.board.render(await this.findCard(search.value))
+            
         })
 
         searchPanel.append(search, searchBtn)
 
         return searchPanel
     }
+
+    async findCard(cityNameFromInput: string): Promise<City[]> {
+        const cardList: City[] = await (await fetch('../../russian-cities.json')).json()
+
+        const filterCardList = cardList.filter(city => {
+
+            if (city.name.toLocaleLowerCase().match(cityNameFromInput.toLocaleLowerCase())) {
+                return city
+            }
+
+        })
+
+        return filterCardList
+    }
+
 
 
 }
