@@ -20,7 +20,7 @@
     width: 100%;
     height: 250px;
 
-    background: linear-gradient(rgba(114, 173, 237, 1), #000);
+    background: linear-gradient(rgb(68, 127, 190), rgb(64, 151, 192));
 
     display: flex;
     flex-direction: column;
@@ -48,7 +48,7 @@
     height: 50px;
 
     border-radius: 50px;
-    background: linear-gradient(to top, rgba(114, 173, 237, 1), blue);
+    background: linear-gradient(to top, rgba(114, 173, 237, 1), rgb(238, 119, 179));
 
     font-size: 25px;
     font-weight: bold;
@@ -65,4 +65,16 @@
 
 .card__btn:active {
     transform: scale(0.90);
+}
+
+@media screen and (max-width: 768px) {
+    .card-board {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .card-board {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
