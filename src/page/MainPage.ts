@@ -1,4 +1,4 @@
-import WeatherPanel from "../components/WeatherPanel.js";
+import weatherPanel from "../components/WeatherPanel.js";
 import CardBoard from "../components/CardBoard.js";
 import Search from "../components/Search.js";
 
@@ -9,8 +9,7 @@ export default class MainPage {
         // стандартный контейнер для централизации и ограничения пространства
         const container = document.createElement('div')
         container.classList.add('container', 'card__container')
-
-        const weatherPanel = new WeatherPanel()
+        
         // run() добавляет панель в начало document.body
         weatherPanel.run()
 

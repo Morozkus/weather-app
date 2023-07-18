@@ -1,4 +1,5 @@
 import { City } from "../Interfaces/Interfaces"
+import weatherPanel from "../components/WeatherPanel.js"
 
 export default class Card {
     card: HTMLElement
@@ -21,8 +22,14 @@ export default class Card {
         const cardBtn = document.createElement('btn')
         cardBtn.classList.add('card__btn')
         cardBtn.textContent = 'Прогноз'
-        cardBtn.addEventListener('click', () => {
-            console.log(cardCity.textContent, lat, lon);
+
+        cardBtn.addEventListener('click', async () => {
+            const weather = await (await fetch(`http://localhost:3223/api/weather?lat=${lat}&lon=${lon}`)).json()
+            const { temp, icon, condition, wind_speed, humidity } = weather.fact
+            
+            weatherPanel.render(`${temp}&deg;`, city, `https://yastatic.net/weather/i/icons/funky/dark/${icon}.svg`, humidity, wind_speed, condition)
+
+
         })
 
         card.append(sky, cardCity, cardBtn)

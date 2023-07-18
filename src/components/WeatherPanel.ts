@@ -3,9 +3,9 @@ enum WeatherImg {
     BAD = 'img/IMG_5742.PNG'
 }
 
-export default class WeatherPanel {
+class WeatherPanel {
     public weatherPanelComponent: HTMLElement
-    private body: HTMLElement
+    public body: HTMLElement
 
     constructor() {
         this.body = document.body
@@ -47,9 +47,12 @@ export default class WeatherPanel {
         const currentWeather = document.createElement('div')
         currentWeather.classList.add('currentWeather')
 
-        const conditions = document.createElement('span')
+        const conditions = document.createElement('div')
         conditions.classList.add('conditions')
         conditions.id = 'conditions'
+        const conditionsIMG = document.createElement('img')
+        conditionsIMG.id = 'condition-img'
+        conditions.append(conditionsIMG)
 
         // 
         const info = document.createElement('div')
@@ -72,4 +75,32 @@ export default class WeatherPanel {
 
         return weatherWrapper
     }
+
+    render(temp: string, location: string, img: string, rain: string | number, wind: string | number, condition: string) {
+        const wrapper = this.getElement()
+
+        const Wtemp = wrapper.querySelector('#temp')
+        Wtemp!.innerHTML = temp
+
+        const Wlocation = wrapper.querySelector('#location')
+        Wlocation!.textContent = location
+
+        const WconditionImg = wrapper.querySelector('#condition-img')
+        WconditionImg!.setAttribute('src', img)
+
+        const Wrain = wrapper.querySelector('#rain')
+        Wrain!.textContent = String(rain)
+
+        const Wwind = wrapper.querySelector('#wind')
+        Wwind!.textContent = String(wind)
+
+        if (['clear', 'partly-cloudy', 'cloudy'].includes(condition)) {
+            this.body.setAttribute('style', `background-image: url(${WeatherImg.OKEY});`)
+        } else {
+            this.body.setAttribute('style', `background-image: url(${WeatherImg.BAD});`)
+        }
+
+    }
 }
+
+export default new WeatherPanel

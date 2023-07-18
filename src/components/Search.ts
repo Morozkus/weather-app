@@ -28,11 +28,9 @@ export default class Search {
         searchBtn.textContent = 'Найти'
 
         searchBtn.addEventListener('click', async () => {
-
             if (!search.value) return
-
             this.board.render(await this.findCard(search.value))
-            
+
         })
 
         searchPanel.append(search, searchBtn)
@@ -41,17 +39,9 @@ export default class Search {
     }
 
     async findCard(cityNameFromInput: string): Promise<City[]> {
-        const cardList: City[] = await (await fetch('../../russian-cities.json')).json()
+        const cardList: City[] = await (await fetch(`http://localhost:3223/api/cities?cityName=${cityNameFromInput}`)).json()
 
-        const filterCardList = cardList.filter(city => {
-
-            if (city.name.toLocaleLowerCase().match(cityNameFromInput.toLocaleLowerCase())) {
-                return city
-            }
-
-        })
-
-        return filterCardList
+        return cardList
     }
 
 
